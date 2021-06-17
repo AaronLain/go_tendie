@@ -5,7 +5,9 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"os"
 	"strings"
+
 	"github.com/gocolly/colly"
 )
 
@@ -70,6 +72,12 @@ func crawl(month int, day int) {
 		if err != nil {
 			log.Fatal(err)
 		}
+
+		os.WriteFile("./hello", []byte(string(js)), 0666)
+		if err != nil {
+			log.Fatal(err)
+		}
+
 		fmt.Println(string(js))
 	})
 
@@ -79,6 +87,7 @@ func crawl(month int, day int) {
 
 	infoCollector.OnRequest(func(r *colly.Request) {
 		fmt.Println("Visiting Profile URL: ", r.URL.String())
+
 	})
 
 	// uncomment below line if you enable Async mode
